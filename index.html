@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhaj & Nimil — Wedding Invitation</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        .font-script {
+            font-family: 'Great Vibes', 'Alex Brush', cursive;
+        }
+        .font-serif-editorial {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+        }
+        .font-body {
+            font-family: 'Lora', Georgia, serif;
+        }
+
+        .paper-texture-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 40;
+            opacity: 0.34;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperNoise)' opacity='0.28'/%3E%3C/svg%3E");
+        }
+
+        .stationery-card {
+            background-color: #FCF9F2;
+            background-image: linear-gradient(165deg, #FDFBF7 0%, #F4EDE0 100%);
+            box-shadow:
+                0 22px 54px -12px rgba(31, 58, 46, 0.16),
+                0 4px 16px -2px rgba(107, 39, 55, 0.08),
+                inset 0 0 0 1px rgba(184, 150, 78, 0.55);
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        .animate-float-slow {
+            animation: floatSlow 7s ease-in-out infinite;
+        }
+
+        @keyframes soundBar {
+            0%, 100% { height: 4px; }
+            50% { height: 14px; }
+        }
+        .sound-bar-1 { animation: soundBar 0.9s ease-in-out infinite; }
+        .sound-bar-2 { animation: soundBar 0.65s ease-in-out infinite 0.2s; }
+        .sound-bar-3 { animation: soundBar 0.8s ease-in-out infinite 0.4s; }
+    </style>
+</head>
+<body class="min-h-screen bg-[#FAF7F0] text-[#35302B] font-body selection:bg-[#6B2737]/20 selection:text-[#1F3A2E] relative overflow-x-hidden">
+
+    <!-- Paper Texture Layer -->
+    <div class="paper-texture-overlay"></div>
+
+    <!-- STAGE 1: OPENING ENVELOPE MODAL -->
+    <div id="envelopeOverlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center px-4 overflow-hidden transition-opacity duration-1000 bg-[#F3EDE0]" style="background-image: radial-gradient(circle at 18% 18%, rgba(31, 58, 46, 0.14), transparent 45%), radial-gradient(circle at 82% 82%, rgba(107, 39, 55, 0.14), transparent 50%), linear-gradient(135deg, #F8F4EB 0%, #E9DFCE 100%);">
+        
+        <div id="introText" class="text-center mb-6 sm:mb-8 z-10 transition-all duration-700">
+            <p class="font-serif-editorial uppercase tracking-[0.28em] text-xs sm:text-sm text-[#1F3A2E] mb-1">A Keepsake Invitation For You</p>
+            <h2 class="font-script text-3xl sm:text-4xl text-[#6B2737]">Minhaj &amp; Nimil</h2>
+        </div>
+
+        <div id="envelopeContainer" onclick="openEnvelope()" role="button" tabindex="0" class="relative w-full max-w-[360px] sm:max-w-[460px] aspect-[1.45/1] cursor-pointer group select-none" style="perspective: 1400px;">
+            <div id="envelopeShadow" class="absolute -bottom-6 inset-x-6 h-10 rounded-full bg-[#1F3A2E]/30 blur-xl transition-all duration-700 group-hover:scale-105 group-hover:bg-[#1F3A2E]/35"></div>
+
+            <div class="relative w-full h-full rounded-md overflow-visible shadow-[0_24px_55px_rgba(25,42,34,0.3)] border border-[#B8964E]/55" style="background: linear-gradient(145deg, #2B4C3B 0%, #182E24 100%);">
+                <div class="absolute inset-1.5 rounded-sm overflow-hidden bg-[#FAF7F0]">
+                    <div class="absolute inset-0 bg-[#FAF7F0]/84"></div>
+                </div>
+
+                <!-- Sliding Card -->
+                <div id="slidingCard" class="absolute left-3 right-3 sm:left-5 sm:right-5 bg-[#FAF7F0] rounded-sm border border-[#B8964E]/80 shadow-xl px-5 py-6 text-center transition-all duration-1000 ease-out flex flex-col items-center justify-center translate-y-2 h-[88%] z-10" style="background: linear-gradient(to bottom, #FCF9F2, #F4EDE0);">
+                    <div class="w-full h-full border border-[#6B2737]/30 p-3 sm:p-4 flex flex-col items-center justify-center">
+                        <p class="font-serif-editorial uppercase tracking-[0.25em] text-[10px] sm:text-xs text-[#2B4C3B] mb-1">Together With Their Families</p>
+                        <h3 class="font-script text-3xl sm:text-5xl text-[#1F3A2E] leading-tight">Minhaj &amp; Nimil</h3>
+                        <div class="w-16 h-[1px] bg-[#6B2737] my-2"></div>
+                        <p class="font-serif-editorial italic text-xs sm:text-sm text-[#6B2737]">“A quiet beginning to a lifetime together”</p>
+                        <p class="font-serif-editorial uppercase tracking-[0.2em] text-[10px] sm:text-xs text-[#3B3630] mt-2">Saturday, 12 December 2026</p>
+                    </div>
+                </div>
+
+                <!-- Envelope Inner Pockets -->
+                <div class="absolute inset-0 z-20 pointer-events-none overflow-hidden rounded-md">
+                    <div class="absolute inset-0" style="clip-path: polygon(0 0, 52% 54%, 0 100%); background: linear-gradient(135deg, #2B4C3B 0%, #1F3A2E 100%);"></div>
+                    <div class="absolute inset-0" style="clip-path: polygon(100% 0, 48% 54%, 100% 100%); background: linear-gradient(225deg, #274636 0%, #1B3328 100%);"></div>
+                    <div class="absolute inset-0" style="clip-path: polygon(0 100%, 50% 47%, 100% 100%); background: linear-gradient(0deg, #172B22 0%, #244032 100%); box-shadow: 0 -4px 14px rgba(0,0,0,0.22);"></div>
+                </div>
+
+                <!-- Envelope Flap -->
+                <div id="envelopeFlap" class="absolute inset-x-0 top-0 h-[58%] origin-top transition-transform duration-700 ease-in-out z-25" style="transform-style: preserve-3d; transform: rotateX(0deg);">
+                    <div class="w-full h-full shadow-lg" style="clip-path: polygon(0 0, 100% 0, 50% 100%); background: linear-gradient(180deg, #1B3328 0%, #2B4C3B 100%);"></div>
+                </div>
+
+                <!-- Wax Seal -->
+                <div id="waxSeal" class="absolute left-1/2 top-[52%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none transition-all duration-700">
+                    <div class="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
+                        <svg viewBox="0 0 140 140" class="w-full h-full drop-shadow-[0_12px_20px_rgba(45,12,20,0.55)]">
+                            <defs>
+                                <radialGradient id="burgundyWax" cx="35%" cy="30%" r="70%">
+                                    <stop offset="0%" stopColor="#8A3548"></stop>
+                                    <stop offset="55%" stopColor="#6B2737"></stop>
+                                    <stop offset="100%" stopColor="#42131E"></stop>
+                                </radialGradient>
+                                <linearGradient id="goldFoil" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stopColor="#EAD29E"></stop>
+                                    <stop offset="50%" stopColor="#B8964E"></stop>
+                                    <stop offset="100%" stopColor="#8C6B2E"></stop>
+                                </linearGradient>
+                            </defs>
+                            <path d="M70 8C86 7 103 14 115 26C127 38 133 55 131 72C129 89 122 106 109 117C96 128 79 133 62 131C45 129 28 121 18 107C8 93 6 75 10 58C14 41 24 25 38 16C48 10 59 8 70 8Z" fill="url(#burgundyWax)"></path>
+                            <circle cx="70" cy="70" r="49" fill="none" stroke="#3D101B" stroke-width="3.5" opacity="0.7"></circle>
+                            <circle cx="70" cy="70" r="46" fill="none" stroke="url(#goldFoil)" stroke-width="1.5" stroke-dasharray="3 2"></circle>
+                        </svg>
+                        <span class="absolute inset-0 flex items-center justify-center font-script text-2xl sm:text-3xl tracking-wider select-none text-[#EAD29E]" style="text-shadow: 0 1px 2px rgba(34, 8, 14, 0.9);">M &amp; N</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tapButtonContainer" class="mt-10 sm:mt-12 text-center z-10 transition-all duration-500">
+            <button onclick="openEnvelope()" class="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-[#1F3A2E] hover:bg-[#172C23] text-[#FAF7F0] border border-[#B8964E]/80 shadow-md transition-all duration-300 font-serif-editorial tracking-[0.2em] uppercase text-xs sm:text-sm cursor-pointer">
+                <span>Tap the Wax Seal to Open</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <header id="siteNavbar" class="fixed top-4 inset-x-0 z-30 flex justify-center px-4 transition-all duration-1000 opacity-0 -translate-y-6 pointer-events-none">
+        <nav aria-label="Wedding Invitation Sections" class="flex items-center gap-1 sm:gap-3 px-3 sm:px-6 py-2 rounded-full bg-[#FAF7F0]/92 backdrop-blur-md border border-[#B8964E]/60 shadow-[0_8px_24px_rgba(31,58,46,0.12)]">
+            <a href="#invitation" class="px-2.5 sm:px-3 py-1 rounded-full font-serif-editorial uppercase tracking-[0.18em] text-[11px] sm:text-xs text-[#1F3A2E] hover:bg-[#1F3A2E]/10 transition-colors">Invitation</a>
+            <span class="text-[#6B2737]/50 text-xs">•</span>
+            <a href="#reception" class="px-2.5 sm:px-3 py-1 rounded-full font-serif-editorial uppercase tracking-[0.18em] text-[11px] sm:text-xs text-[#1F3A2E] hover:bg-[#1F3A2E]/10 transition-colors">Reception</a>
+            <span class="text-[#6B2737]/50 text-xs">•</span>
+            <a href="#details" class="px-2.5 sm:px-3 py-1 rounded-full font-serif-editorial uppercase tracking-[0.18em] text-[11px] sm:text-xs text-[#1F3A2E] hover:bg-[#1F3A2E]/10 transition-colors">Countdown &amp; Map</a>
+        </nav>
+    </header>
+
+    <!-- MUSIC TOGGLE BUTTON -->
+    <div id="musicButtonContainer" class="fixed bottom-5 right-5 z-30 transition-all duration-1000 opacity-0 translate-y-6 pointer-events-none">
+        <button onclick="toggleMusic()" aria-label="Toggle background music" class="group flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-[#1F3A2E] hover:bg-[#162B22] text-[#FAF7F0] border border-[#B8964E]/80 shadow-[0_10px_28px_rgba(24,46,36,0.35)] transition-all duration-300 cursor-pointer">
+            <span id="musicIconBox" class="flex items-center gap-1">
+                <i data-lucide="music" class="w-4 h-4 text-[#EAD29E]"></i>
+            </span>
+            <span id="musicLabel" class="font-serif-editorial uppercase tracking-[0.18em] text-[11px] hidden sm:inline">Play Melody</span>
+        </button>
+    </div>
+
+    <!-- MAIN WEBSITE CONTENT -->
+    <main id="mainContent" class="relative transition-all duration-1000 opacity-0 scale-[0.98]">
+        
+        <!-- SECTION 1: INVITATION HERO -->
+        <section id="invitation" class="relative pt-24 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+            <div class="relative mx-auto max-w-3xl">
+                <div class="relative stationery-card rounded-sm p-6 sm:p-12 md:p-16 text-center overflow-hidden">
+                    <div class="absolute inset-3 sm:inset-5 border border-[#B8964E]/75 pointer-events-none"></div>
+                    <div class="absolute inset-4 sm:inset-6 border border-[#6B2737]/25 pointer-events-none"></div>
+
+                    <div class="relative z-10 pt-4 sm:pt-2">
+                        <div class="inline-flex items-center justify-center w-14 h-14 rounded-full border border-[#6B2737]/50 bg-[#FAF7F0] shadow-sm mb-5">
+                            <span class="font-script text-2xl text-[#6B2737]">M &amp; N</span>
+                        </div>
+
+                        <p class="font-serif-editorial uppercase tracking-[0.3em] text-xs sm:text-sm text-[#1F3A2E] mb-4">Together With Their Beloved Families</p>
+
+                        <p class="font-serif-editorial italic text-lg sm:text-2xl text-[#6B2737] max-w-lg mx-auto mb-6">“A quiet beginning to a lifetime together”</p>
+
+                        <div class="my-4 sm:my-6">
+                            <span class="block font-serif-editorial uppercase tracking-[0.25em] text-[10px] text-[#556B4E] mb-1">Groom</span>
+                            <h1 class="font-script text-6xl sm:text-7xl md:text-8xl text-[#1F3A2E] leading-none">Minhaj</h1>
+
+                            <div class="my-2 sm:my-3 flex items-center justify-center gap-4">
+                                <span class="h-[1px] w-12 sm:w-20 bg-[#6B2737]/45"></span>
+                                <span class="font-script text-3xl sm:text-4xl text-[#6B2737]">&amp;</span>
+                                <span class="h-[1px] w-12 sm:w-20 bg-[#6B2737]/45"></span>
+                            </div>
+
+                            <h1 class="font-script text-6xl sm:text-7xl md:text-8xl text-[#1F3A2E] leading-none">Nimil</h1>
+                            <span class="block font-serif-editorial uppercase tracking-[0.25em] text-[10px] text-[#556B4E] mt-2">Bride</span>
+                        </div>
+
+                        <p class="font-body text-sm sm:text-base text-[#464038] max-w-md mx-auto leading-relaxed mb-8 mt-6">
+                            Request the honor of your presence and warm blessings as they celebrate their union on
+                        </p>
+
+                        <div class="max-w-lg mx-auto py-5 px-4 sm:px-8 bg-[#F4EDE0]/90 border-y border-[#6B2737]/35 mb-8">
+                            <p class="font-serif-editorial uppercase tracking-[0.24em] text-base sm:text-xl font-semibold text-[#1F3A2E]">Saturday, 12 December 2026</p>
+                            <p class="font-serif-editorial italic text-base sm:text-lg text-[#6B2737] mt-1">At 1:00 PM</p>
+                            <div class="w-10 h-[1px] bg-[#B8964E] mx-auto my-3"></div>
+                            <p class="font-serif-editorial font-semibold text-base sm:text-lg text-[#35302B]">Floor 2, Amrita Lal Dey Milonayoton</p>
+                            <p class="font-body text-xs sm:text-sm text-[#564F45] mt-1">Barishal Club Limited Compound, Club Road, Barishal 8200</p>
+                        </div>
+
+                        <div class="relative max-w-2xl mx-auto mt-8 pt-2">
+                            <figure class="p-2.5 sm:p-4 bg-[#FAF7F0] border border-[#B8964E]/70 shadow-[0_14px_34px_rgba(31,58,46,0.16)]">
+                                <div class="overflow-hidden aspect-[16/10] bg-[#EDE6D8]">
+                                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=85" alt="Wedding Portrait" class="w-full h-full object-cover hover:scale-105 transition-transform duration-1000 ease-out">
+                                </div>
+                                <figcaption class="pt-3 pb-1 font-serif-editorial italic text-xs sm:text-sm text-[#6B2737] tracking-wide">Barishal, Winter 2026 — Forever begins here</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: RECEPTION CARD -->
+        <section id="reception" class="relative py-14 sm:py-22 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+            <div class="text-center mb-10 sm:mb-12">
+                <p class="font-serif-editorial uppercase tracking-[0.28em] text-xs text-[#6B2737] mb-2">Join Us In Celebration</p>
+                <h2 class="font-script text-5xl sm:text-6xl text-[#1F3A2E]">The Reception</h2>
+            </div>
+
+            <div class="relative stationery-card rounded-sm p-7 sm:p-12 overflow-hidden">
+                <div class="absolute inset-3 border border-[#B8964E]/55 pointer-events-none"></div>
+                <div class="absolute inset-4 border border-[#6B2737]/20 pointer-events-none"></div>
+
+                <div class="relative z-10 max-w-2xl mx-auto text-center">
+                    <span class="inline-block px-4 py-1 rounded-full bg-[#6B2737]/10 border border-[#6B2737]/30 font-serif-editorial uppercase tracking-[0.22em] text-[11px] text-[#6B2737] mb-4">The Celebration • Save The Date</span>
+
+                    <h3 class="font-script text-4xl sm:text-6xl text-[#6B2737] mb-1">Wedding Reception</h3>
+                    <p class="font-serif-editorial italic text-base sm:text-xl text-[#1F3A2E] mb-5">An Afternoon of Blessings, Feast &amp; Joy</p>
+
+                    <p class="font-body text-sm sm:text-base text-[#464038] leading-relaxed mb-8">
+                        With joyful hearts and the warm blessings of our families, we cordially invite you to join us for our wedding reception—an intimate afternoon of love, heartfelt company, and celebration as we begin our lifelong journey together.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 py-6 px-4 bg-[#FAF7F0]/80 border-y border-[#B8964E]/50 text-left sm:text-center">
+                        <div class="flex sm:flex-col items-start sm:items-center gap-3 sm:gap-1.5">
+                            <div class="w-9 h-9 rounded-full bg-[#1F3A2E]/10 border border-[#1F3A2E]/25 flex items-center justify-center shrink-0">
+                                <i data-lucide="calendar" class="w-4 h-4 text-[#1F3A2E]"></i>
+                            </div>
+                            <div>
+                                <span class="font-serif-editorial uppercase tracking-widest text-[11px] text-[#6B2737] block">Date</span>
+                                <span class="font-serif-editorial font-semibold text-base text-[#1F3A2E]">Saturday, 12 December 2026</span>
+                            </div>
+                        </div>
+
+                        <div class="flex sm:flex-col items-start sm:items-center gap-3 sm:gap-1.5">
+                            <div class="w-9 h-9 rounded-full bg-[#6B2737]/10 border border-[#6B2737]/25 flex items-center justify-center shrink-0">
+                                <i data-lucide="clock" class="w-4 h-4 text-[#6B2737]"></i>
+                            </div>
+                            <div>
+                                <span class="font-serif-editorial uppercase tracking-widest text-[11px] text-[#6B2737] block">Time</span>
+                                <span class="font-serif-editorial font-semibold text-base text-[#1F3A2E]">1:00 PM</span>
+                            </div>
+                        </div>
+
+                        <div class="flex sm:flex-col items-start sm:items-center gap-3 sm:gap-1.5">
+                            <div class="w-9 h-9 rounded-full bg-[#1F3A2E]/10 border border-[#1F3A2E]/25 flex items-center justify-center shrink-0">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-[#1F3A2E]"></i>
+                            </div>
+                            <div>
+                                <span class="font-serif-editorial uppercase tracking-widest text-[11px] text-[#6B2737] block">Venue &amp; Location</span>
+                                <span class="font-serif-editorial font-semibold text-base text-[#1F3A2E] block">Floor 2, Amrita Lal Dey Milonayoton</span>
+                                <span class="text-xs text-[#564F45] block mt-0.5">Barishal Club Limited Compound, Club Road, Barishal 8200</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-md mx-auto">
+                        <button onclick="downloadICS()" class="w-full sm:flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-sm bg-[#1F3A2E] hover:bg-[#162B22] text-[#FAF7F0] border border-[#B8964E]/60 font-serif-editorial uppercase tracking-[0.18em] text-xs transition-colors cursor-pointer shadow-sm">
+                            <i data-lucide="download" class="w-4 h-4 text-[#EAD29E]"></i>
+                            <span id="icsButtonText">Save the Date</span>
+                        </button>
+
+                        <a href="https://www.google.com/maps/search/?api=1&query=Barishal+Club+Limited+Club+Road+Barishal+8200" target="_blank" rel="noopener noreferrer" class="w-full sm:flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-sm bg-[#6B2737] hover:bg-[#521B28] text-[#FAF7F0] border border-[#B8964E]/60 font-serif-editorial uppercase tracking-[0.18em] text-xs transition-colors shadow-sm">
+                            <i data-lucide="navigation" class="w-4 h-4 text-[#EAD29E]"></i>
+                            <span>Get Directions</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: COUNTDOWN & GOOGLE MAPS -->
+        <section id="details" class="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-[#EFE8DA]/80 border-y border-[#B8964E]/35">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-14 sm:mb-18">
+                    <p class="font-serif-editorial uppercase tracking-[0.28em] text-xs text-[#6B2737] mb-2">Counting the Moments Until Forever</p>
+                    <h2 class="font-script text-5xl sm:text-6xl text-[#1F3A2E] mb-8">Until We Celebrate Together</h2>
+                    
+                    <!-- Countdown Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-5 max-w-2xl mx-auto">
+                        <div class="relative bg-[#FAF7F0] border border-[#B8964E]/70 rounded-sm p-4 sm:p-6 text-center shadow-[0_12px_28px_rgba(31,58,46,0.1)]">
+                            <span id="daysVal" class="block font-serif-editorial text-3xl sm:text-5xl font-semibold text-[#1F3A2E] tabular-nums">00</span>
+                            <span class="block mt-1.5 font-serif-editorial uppercase tracking-[0.24em] text-[10px] sm:text-xs text-[#6B2737] font-medium">Days</span>
+                        </div>
+                        <div class="relative bg-[#FAF7F0] border border-[#B8964E]/70 rounded-sm p-4 sm:p-6 text-center shadow-[0_12px_28px_rgba(31,58,46,0.1)]">
+                            <span id="hoursVal" class="block font-serif-editorial text-3xl sm:text-5xl font-semibold text-[#1F3A2E] tabular-nums">00</span>
+                            <span class="block mt-1.5 font-serif-editorial uppercase tracking-[0.24em] text-[10px] sm:text-xs text-[#6B2737] font-medium">Hours</span>
+                        </div>
+                        <div class="relative bg-[#FAF7F0] border border-[#B8964E]/70 rounded-sm p-4 sm:p-6 text-center shadow-[0_12px_28px_rgba(31,58,46,0.1)]">
+                            <span id="minsVal" class="block font-serif-editorial text-3xl sm:text-5xl font-semibold text-[#1F3A2E] tabular-nums">00</span>
+                            <span class="block mt-1.5 font-serif-editorial uppercase tracking-[0.24em] text-[10px] sm:text-xs text-[#6B2737] font-medium">Minutes</span>
+                        </div>
+                        <div class="relative bg-[#FAF7F0] border border-[#B8964E]/70 rounded-sm p-4 sm:p-6 text-center shadow-[0_12px_28px_rgba(31,58,46,0.1)]">
+                            <span id="secsVal" class="block font-serif-editorial text-3xl sm:text-5xl font-semibold text-[#1F3A2E] tabular-nums">00</span>
+                            <span class="block mt-1.5 font-serif-editorial uppercase tracking-[0.24em] text-[10px] sm:text-xs text-[#6B2737] font-medium">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stationery-card rounded-sm p-6 sm:p-10 relative">
+                    <div class="absolute inset-2.5 border border-[#B8964E]/50 pointer-events-none"></div>
+                    <div class="relative z-10">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                            <div>
+                                <p class="font-serif-editorial uppercase tracking-[0.24em] text-xs text-[#6B2737] mb-1">Venue Location &amp; Map</p>
+                                <h3 class="font-serif-editorial text-2xl sm:text-3xl font-semibold text-[#1F3A2E]">Floor 2, Amrita Lal Dey Milonayoton</h3>
+                                <p class="font-body text-xs sm:text-sm text-[#564F45] mt-0.5">Barishal Club Limited Compound, Club Road, Barishal 8200</p>
+                            </div>
+
+                            <a href="https://www.google.com/maps/search/?api=1&query=Barishal+Club+Limited+Club+Road+Barishal+8200" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm bg-[#1F3A2E] hover:bg-[#162B22] border border-[#B8964E]/70 text-[#FAF7F0] font-serif-editorial uppercase tracking-[0.16em] text-xs shrink-0 transition-colors">
+                                <span>Open in Google Maps</span>
+                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-[#EAD29E]"></i>
+                            </a>
+                        </div>
+
+                        <div class="rounded-sm overflow-hidden border border-[#B8964E]/70 shadow-inner bg-[#EDE6D8] aspect-[16/9] sm:aspect-[21/10]">
+                            <iframe title="Google Maps" src="https://maps.google.com/maps?q=Barishal+Club+Limited,+Club+Road,+Barishal+8200&t=&z=16&ie=UTF8&iwloc=&output=embed" class="w-full h-full border-0 filter sepia-[0.14] contrast-[0.98]" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="relative pt-12 pb-20 px-4 sm:px-6 overflow-hidden">
+            <div class="max-w-3xl mx-auto stationery-card rounded-sm p-8 sm:p-14 text-center relative overflow-hidden">
+                <div class="absolute inset-3 border border-[#B8964E]/65 pointer-events-none"></div>
+                <div class="absolute inset-4 border border-[#6B2737]/25 pointer-events-none"></div>
+
+                <div class="relative z-10">
+                    <p class="font-serif-editorial uppercase tracking-[0.28em] text-xs text-[#556B4E] mb-3">With All Our Love</p>
+                    <h2 class="font-script text-5xl sm:text-7xl text-[#1F3A2E] mb-2">Minhaj &amp; Nimil</h2>
+                    <p class="font-serif-editorial uppercase tracking-[0.24em] text-xs sm:text-sm text-[#564F45] mb-6">Saturday, 12 December 2026 • Barishal</p>
+                    <p class="font-script text-3xl sm:text-4xl text-[#6B2737]">Happily Ever After</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- JAVASCRIPT LOGIC & AUDIO SYNTHESIZER -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Soft Romantic Lullaby Web Audio Engine
+        class SoftRomanticLullabyEngine {
+            constructor() {
+                this.ctx = null;
+                this.isPlaying = false;
+                this.intervalId = null;
+                this.masterGain = null;
+                this.step = 0;
+                this.bars = [
+                    { bass: 87.31, piano: [174.61, 220.00, 261.63, 349.23, 261.63, 220.00], harp: 523.25 },
+                    { bass: 87.31, piano: [174.61, 220.00, 261.63, 349.23, 261.63, 220.00], harp: 440.00 },
+                    { bass: 73.42, piano: [146.83, 220.00, 261.63, 329.63, 261.63, 220.00], harp: 392.00 },
+                    { bass: 73.42, piano: [146.83, 207.65, 261.63, 329.63, 261.63, 207.65], harp: 349.23 },
+                    { bass: 58.27, piano: [116.54, 174.61, 233.08, 293.66, 233.08, 174.61], harp: 466.16 },
+                    { bass: 58.27, piano: [116.54, 174.61, 233.08, 293.66, 233.08, 174.61], harp: 523.25 },
+                    { bass: 65.41, piano: [130.81, 196.00, 261.63, 349.23, 261.63, 196.00], harp: 493.88 },
+                    { bass: 65.41, piano: [130.81, 185.00, 261.63, 329.63, 261.63, 185.00], harp: 440.00 }
+                ];
+            }
+
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                    this.masterGain = this.ctx.createGain();
+                    this.masterGain.gain.setValueAtTime(0.001, this.ctx.currentTime);
+                    this.masterGain.connect(this.ctx.destination);
+                }
+                if (this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            }
+
+            playPianoNote(freq, duration = 1.8, volume = 0.035) {
+                if (!this.ctx || !this.isPlaying) return;
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const filter = this.ctx.createBiquadFilter();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now);
+
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(780, now);
+
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.linearRampToValueAtTime(volume, now + 0.08);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.masterGain);
+
+                osc.start(now);
+                osc.stop(now + duration + 0.05);
+            }
+
+            playHarpTone(freq, duration = 2.2, volume = 0.02) {
+                if (!this.ctx || !this.isPlaying) return;
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, now);
+
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.linearRampToValueAtTime(volume, now + 0.04);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+
+                osc.start(now);
+                osc.stop(now + duration + 0.05);
+            }
+
+            start() {
+                try {
+                    this.init();
+                    if (this.isPlaying) return;
+                    this.isPlaying = true;
+
+                    const now = this.ctx.currentTime;
+                    this.masterGain.gain.cancelScheduledValues(now);
+                    this.masterGain.gain.setValueAtTime(Math.max(0.001, this.masterGain.gain.value), now);
+                    this.masterGain.gain.linearRampToValueAtTime(0.8, now + 1.5);
+
+                    const tick = () => {
+                        if (!this.isPlaying) return;
+                        const barIndex = Math.floor(this.step / 6) % this.bars.length;
+                        const beatInBar = this.step % 6;
+                        const bar = this.bars[barIndex];
+
+                        this.playPianoNote(bar.piano[beatInBar], 1.9, beatInBar === 0 ? 0.04 : 0.028);
+                        if (beatInBar === 0) {
+                            this.playHarpTone(bar.harp, 2.5, 0.024);
+                        }
+                        this.step++;
+                    };
+
+                    tick();
+                    this.intervalId = setInterval(tick, 430);
+                } catch (e) {
+                    console.warn('Audio deferred:', e);
+                }
+            }
+
+            stop() {
+                this.isPlaying = false;
+                if (this.intervalId) {
+                    clearInterval(this.intervalId);
+                    this.intervalId = null;
+                }
+                if (this.ctx && this.masterGain) {
+                    const now = this.ctx.currentTime;
+                    this.masterGain.gain.cancelScheduledValues(now);
+                    this.masterGain.gain.linearRampToValueAtTime(0.0001, now + 0.8);
+                }
+            }
+
+            toggle() {
+                if (this.isPlaying) {
+                    this.stop();
+                    return false;
+                } else {
+                    this.start();
+                    return true;
+                }
+            }
+        }
+
+        const musicEngine = new SoftRomanticLullabyEngine();
+        let isOpened = false;
+
+        function openEnvelope() {
+            if (isOpened) return;
+            isOpened = true;
+
+            const flap = document.getElementById('envelopeFlap');
+            const seal = document.getElementById('waxSeal');
+            const card = document.getElementById('slidingCard');
+            const overlay = document.getElementById('envelopeOverlay');
+            const navbar = document.getElementById('siteNavbar');
+            const musicBtn = document.getElementById('musicButtonContainer');
+            const mainContent = document.getElementById('mainContent');
+
+            // 1. Break wax seal
+            seal.style.transform = 'translate(-50%, -50%) scale(1.15) rotate(15deg)';
+            seal.style.opacity = '0';
+
+            // 2. Open flap
+            setTimeout(() => {
+                flap.style.transform = 'rotateX(180deg)';
+            }, 400);
+
+            // 3. Slide card up
+            setTimeout(() => {
+                card.style.transform = 'translateY(-110px) scale(1.04)';
+                card.style.zIndex = '30';
+            }, 1000);
+
+            // 4. Fade out overlay and enter main website
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                overlay.style.pointerEvents = 'none';
+
+                navbar.style.opacity = '1';
+                navbar.style.transform = 'translateY(0)';
+                navbar.style.pointerEvents = 'auto';
+
+                musicBtn.style.opacity = '1';
+                musicBtn.style.transform = 'translateY(0)';
+                musicBtn.style.pointerEvents = 'auto';
+
+                mainContent.style.opacity = '1';
+                mainContent.style.transform = 'scale(1)';
+
+                musicEngine.start();
+                updateMusicButtonUI(true);
+            }, 2200);
+        }
+
+        function toggleMusic() {
+            const playing = musicEngine.toggle();
+            updateMusicButtonUI(playing);
+        }
+
+        function updateMusicButtonUI(isPlaying) {
+            const iconBox = document.getElementById('musicIconBox');
+            const label = document.getElementById('musicLabel');
+            if (isPlaying) {
+                iconBox.innerHTML = `
+                    <div class="flex items-end gap-0.5 h-3.5 w-3.5 justify-center">
+                        <span class="w-0.5 bg-[#EAD29E] rounded-full sound-bar-1"></span>
+                        <span class="w-0.5 bg-[#EAD29E] rounded-full sound-bar-2"></span>
+                        <span class="w-0.5 bg-[#EAD29E] rounded-full sound-bar-3"></span>
+                    </div>
+                `;
+                label.textContent = "Melody On";
+            } else {
+                iconBox.innerHTML = `<i data-lucide="volume-x" class="w-4 h-4 text-[#EAD29E]"></i>`;
+                label.textContent = "Play Melody";
+                lucide.createIcons();
+            }
+        }
+
+        // Live Countdown Timer (Target: Dec 12, 2026 13:00 BST)
+        const targetDate = new Date("2026-12-12T13:00:00+06:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('daysVal').textContent = '00';
+                document.getElementById('hoursVal').textContent = '00';
+                document.getElementById('minsVal').textContent = '00';
+                document.getElementById('secsVal').textContent = '00';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('daysVal').textContent = String(days).padStart(2, '0');
+            document.getElementById('hoursVal').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minsVal').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('secsVal').textContent = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Calendar .ics Export
+        function downloadICS() {
+            const icsContent = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//Minhaj & Nimil Wedding//EN',
+                'BEGIN:VEVENT',
+                'DTSTART:20261212T130000',
+                'DTEND:20261212T170000',
+                'SUMMARY:Minhaj & Nimil — Wedding Reception',
+                'DESCRIPTION:A quiet beginning to a lifetime together. Join us at Floor 2, Amrita Lal Dey Milonayoton, Barishal Club Limited Compound, Club Road, Barishal 8200.',
+                'LOCATION:Floor 2, Amrita Lal Dey Milonayoton, Barishal Club Limited Compound, Club Road, Barishal 8200',
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\r\n');
+
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'Minhaj-Nimil-Wedding-Reception.ics');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            const btnText = document.getElementById('icsButtonText');
+            btnText.textContent = "Saved to Calendar";
+            setTimeout(() => { btnText.textContent = "Save the Date"; }, 3000);
+        }
+    </script>
+</body>
+</html>
